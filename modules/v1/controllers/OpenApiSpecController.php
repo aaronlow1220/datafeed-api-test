@@ -6,12 +6,12 @@ use Exception;
 use OpenApi\Annotations as OA;
 use Yii;
 use yii\web\HttpException;
-
+use yii\web\Response;
 /**
  * @OA\OpenApi(
  *     security={{"BearerAuth": {}}},
  *     @OA\Server(
- *         url="https://api.xxx.com",
+ *         url="http://localhost:8080",
  *         description="[Dev] APIs server"
  *     ),
  *     @OA\Info(

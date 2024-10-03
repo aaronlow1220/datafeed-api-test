@@ -66,13 +66,14 @@ class ActiveApiController extends ActiveController
             'class' => \yii\filters\Cors::class,
         ];
 
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-            ],
-            'except' => $this->authExcept()
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //     ],
+        //     'except' => $this->authExcept()
+        // ];
+        unset($behaviors['authenticator']);
 
         return $behaviors;
     }

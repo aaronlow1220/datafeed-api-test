@@ -5,56 +5,15 @@ namespace v1\controllers;
 use Throwable;
 use v1\components\ActiveApiController;
 use yii\data\ActiveDataProvider;
+use v1\components\client\ClientMapSearchService;
 use yii\web\HttpException;
+use InvalidArgumentException;
+use app\modules\v1\Module;
 
 /**
  * @OA\Tag(
  *     name="ClientMap",
  *     description="Everything about your ClientMap",
- * )
- *
- * @OA\Get(
- *     path="/client-map",
- *     summary="List",
- *     description="List all ClientMap",
- *     operationId="listClientMap",
- *     tags={"ClientMap"},
- *     @OA\Parameter(
- *         name="page",
- *         in="query",
- *         @OA\Schema(ref="#/components/schemas/StandardParams/properties/page")
- *     ),
- *     @OA\Parameter(
- *         name="pageSize",
- *         in="query",
- *         @OA\Schema(ref="#/components/schemas/StandardParams/properties/pageSize")
- *     ),
- *     @OA\Parameter(
- *         name="sort",
- *         in="query",
- *         @OA\Schema(ref="#/components/schemas/StandardParams/properties/sort")
- *     ),
- *     @OA\Parameter(
- *         name="fields",
- *         in="query",
- *         @OA\Schema(ref="#/components/schemas/StandardParams/properties/fields")
- *     ),
- *     @OA\Parameter(
- *         name="expand",
- *         in="query",
- *         @OA\Schema(type="string", enum={"xxxx"}, description="Query related models, using comma(,) be seperator")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\MediaType(
- *             mediaType="application/json",
- *             @OA\Schema(
- *              @OA\Property(property="_data", type="array", @OA\Items(ref="#/components/schemas/ClientMap")),
- *              @OA\Property(property="_meta", type="object", ref="#/components/schemas/Pagination")
- *             )
- *         )
- *     )
  * )
  *
  * @OA\Get(
@@ -99,14 +58,9 @@ use yii\web\HttpException;
  *         @OA\MediaType(
  *             mediaType="application/json",
  *             @OA\Schema(
- *                  @OA\Property(property="id", ref="#/components/schemas/ClientMap/properties/id"),
  *                  @OA\Property(property="name", ref="#/components/schemas/ClientMap/properties/name"),
  *                  @OA\Property(property="data", ref="#/components/schemas/ClientMap/properties/data"),
- *                  @OA\Property(property="type", ref="#/components/schemas/ClientMap/properties/type"),
- *                  @OA\Property(property="created_by", ref="#/components/schemas/ClientMap/properties/created_by"),
- *                  @OA\Property(property="created_at", ref="#/components/schemas/ClientMap/properties/created_at"),
- *                  @OA\Property(property="updated_by", ref="#/components/schemas/ClientMap/properties/updated_by"),
- *                  @OA\Property(property="updated_at", ref="#/components/schemas/ClientMap/properties/updated_at")
+ *                  @OA\Property(property="type", ref="#/components/schemas/ClientMap/properties/type")
  *             )
  *         ),
  *     ),
@@ -136,14 +90,9 @@ use yii\web\HttpException;
  *         @OA\MediaType(
  *             mediaType="application/json",
  *             @OA\Schema(
- *                  @OA\Property(property="id", ref="#/components/schemas/ClientMap/properties/id"),
  *                  @OA\Property(property="name", ref="#/components/schemas/ClientMap/properties/name"),
  *                  @OA\Property(property="data", ref="#/components/schemas/ClientMap/properties/data"),
- *                  @OA\Property(property="type", ref="#/components/schemas/ClientMap/properties/type"),
- *                  @OA\Property(property="created_by", ref="#/components/schemas/ClientMap/properties/created_by"),
- *                  @OA\Property(property="created_at", ref="#/components/schemas/ClientMap/properties/created_at"),
- *                  @OA\Property(property="updated_by", ref="#/components/schemas/ClientMap/properties/updated_by"),
- *                  @OA\Property(property="updated_at", ref="#/components/schemas/ClientMap/properties/updated_at")
+ *                  @OA\Property(property="type", ref="#/components/schemas/ClientMap/properties/type")
  *             )
  *         ),
  *     ),
@@ -151,25 +100,6 @@ use yii\web\HttpException;
  *         response=200,
  *         description="Successful operation",
  *         @OA\JsonContent(type="object", ref="#/components/schemas/ClientMap")
- *     )
- * )
- *
- * @OA\Delete(
- *     path="/client-map/{id}",
- *     summary="Delete",
- *     description="Delete a record of ClientMap",
- *     operationId="deleteClientMap",
- *     tags={"ClientMap"},
- *     @OA\Parameter(
- *         name="id",
- *         in="path",
- *         description="ClientMap id",
- *         required=true,
- *         @OA\Schema(ref="#/components/schemas/ClientMap/properties/id")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation"
  *     )
  * )
  *
@@ -183,6 +113,21 @@ class ClientMapController extends ActiveApiController
     public $modelClass = 'app\models\ClientMap';
 
     /**
+     * constructor.
+     *
+     * @param string $id
+     * @param Module $module
+     * @param ClientMapSearchService $clientMapSearchService
+     * @param array<string, mixed> $config
+     *
+     * @return void
+     */
+    public function __construct($id, $module, private ClientMapSearchService $clientMapSearchService, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+    }
+
+    /**
      * {@inherit}
      *
      * @return array<string, mixed>
@@ -190,16 +135,6 @@ class ClientMapController extends ActiveApiController
     public function actions()
     {
         $actions = parent::actions();
-
-        // customize the data provider preparation with the "prepareDataProvider()" method
-        $actions['index']['dataFilter'] = [
-            'class' => 'yii\data\ActiveDataFilter',
-            'searchModel' => $this->modelClass
-        ];
-
-        $actions['index']['pagination'] = [
-            'class' => 'v1\components\Pagination'
-        ];
 
         unset($actions['index']);
 
@@ -218,7 +153,7 @@ class ClientMapController extends ActiveApiController
      *         required=false,
      *         @OA\MediaType(
      *             mediaType="application/json",
-     *             @OA\Schema(ref="#/components/schemas/xxxxxSearchModel")
+     *             @OA\Schema(ref="#/components/schemas/ClientMapSearch")
      *         ),
      *     ),
      *     @OA\Response(
@@ -236,26 +171,16 @@ class ClientMapController extends ActiveApiController
      *
      * Search ClientMap
      *
-     * @param xxxxxService $service
      * @return ActiveDataProvider
      */
-    public function actionSearch(xxxxxService $service): ActiveDataProvider
+    public function actionSearch(): ActiveDataProvider
     {
         try {
             $params = $this->getRequestParams();
-            $query = $service->createSearchQuery($params);
 
-            return new ActiveDataProvider([
-                'query' => &$query,
-                'pagination' => [
-                    'class' => 'v1\components\Pagination',
-                    'params' => $params
-                ],
-                'sort' => [
-                    'enableMultiSort' => true,
-                    'params' => $params
-                ]
-            ]);
+            return $this->clientMapSearchService->createDataProvider($params);
+        } catch (InvalidArgumentException $e) {
+            throw new HttpException(400, $e->getMessage());
         } catch (Throwable $e) {
             throw $e;
         }

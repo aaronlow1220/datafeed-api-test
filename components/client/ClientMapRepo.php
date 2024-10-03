@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\components\datafeed;
+namespace app\components\client;
 
 use AtelliTech\Yii2\Utils\AbstractRepository;
 use app\models\ClientMap;
