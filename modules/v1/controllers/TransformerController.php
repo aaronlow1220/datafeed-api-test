@@ -3,11 +3,10 @@
 namespace v1\controllers;
 
 use v1\components\ActiveApiController;
-use function Flow\ETL\DSL\{data_frame};
+use function Flow\ETL\DSL\{data_frame, from_array};
 use function Flow\ETL\Adapter\CSV\{from_csv, to_csv};
 use app\components\client\ClientRepo;
 use app\modules\v1\Module;
-use function Flow\ETL\DSL\from_array;
 use SimpleXMLElement;
 
 class TransformerController extends ActiveApiController
