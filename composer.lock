@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dfb62d52d9d340b37573649f6d71394",
+    "content-hash": "9bc90c5d03a456ca6d93dc42875e353e",
     "packages": [
         {
             "name": "atellitech/utils-yii2",
@@ -701,6 +701,108 @@
                 "source": "https://github.com/flow-php/etl-adapter-json/tree/1.x"
             },
             "time": "2024-09-27T09:57:04+00:00"
+        },
+        {
+            "name": "flow-php/etl-adapter-text",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flow-php/etl-adapter-text.git",
+                "reference": "e5456e1d22ba6bf780e41db0cfc0faf9a19a2526"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flow-php/etl-adapter-text/zipball/e5456e1d22ba6bf780e41db0cfc0faf9a19a2526",
+                "reference": "e5456e1d22ba6bf780e41db0cfc0faf9a19a2526",
+                "shasum": ""
+            },
+            "require": {
+                "flow-php/etl": "^0.10.0 || 1.x-dev",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Flow/ETL/Adapter/Text/functions.php"
+                ],
+                "psr-4": {
+                    "Flow\\": [
+                        "src/Flow"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP ETL - Adapter - Text",
+            "keywords": [
+                "adapter",
+                "etl",
+                "extract",
+                "load",
+                "text",
+                "transform"
+            ],
+            "support": {
+                "issues": "https://github.com/flow-php/etl-adapter-text/issues",
+                "source": "https://github.com/flow-php/etl-adapter-text/tree/0.10.0"
+            },
+            "time": "2024-10-03T17:12:27+00:00"
+        },
+        {
+            "name": "flow-php/etl-adapter-xml",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flow-php/etl-adapter-xml.git",
+                "reference": "9252004e9da9efefda176582b814380216843654"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flow-php/etl-adapter-xml/zipball/9252004e9da9efefda176582b814380216843654",
+                "reference": "9252004e9da9efefda176582b814380216843654",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-xml": "*",
+                "ext-xmlreader": "*",
+                "ext-xmlwriter": "*",
+                "flow-php/etl": "^0.10.0 || 1.x-dev",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Flow/ETL/Adapter/XML/functions.php"
+                ],
+                "psr-4": {
+                    "Flow\\": [
+                        "src/Flow"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHP ETL - Adapter - XML",
+            "keywords": [
+                "adapter",
+                "etl",
+                "extract",
+                "load",
+                "transform",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/flow-php/etl-adapter-xml/issues",
+                "source": "https://github.com/flow-php/etl-adapter-xml/tree/0.10.0"
+            },
+            "time": "2024-10-03T17:12:24+00:00"
         },
         {
             "name": "flow-php/filesystem",
@@ -6795,7 +6897,11 @@
         "atellitech/utils-yii2": 20,
         "zircote/swagger-php": 20,
         "doctrine/annotations": 20,
-        "marquine/php-etl": 20
+        "marquine/php-etl": 20,
+        "flow-php/etl": 20,
+        "flow-php/etl-adapter-csv": 20,
+        "flow-php/etl-adapter-json": 20,
+        "flow-php/etl-adapter-xml": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

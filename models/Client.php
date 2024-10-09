@@ -10,12 +10,12 @@ use yii\db\ActiveQuery;
 
 /**
  * @OA\Schema(
- *   schema="PlatformMap",
- *   title="PlatformMap Model",
- *   description="This model is used to access platform_map data",
+ *   schema="Client",
+ *   title="Client Model",
+ *   description="This model is used to access client data",
  *   required={"id", "name", "data", "created_by", "created_at", "updated_by", "updated_at"},
  *   @OA\Property(property="id", type="integer", description="id #autoIncrement #pk"),
- *   @OA\Property(property="name", type="string", description="Platform name", maxLength=255),
+ *   @OA\Property(property="name", type="string", description="Client name", maxLength=255),
  *   @OA\Property(property="data", type="string", description="Data mapping rule, JSON format"),
  *   @OA\Property(property="created_by", type="integer", description="ref: > user.id"),
  *   @OA\Property(property="created_at", type="integer", description="unixtime"),
@@ -25,16 +25,16 @@ use yii\db\ActiveQuery;
  *
  * @version 1.0.0
  */
-class PlatformMap extends ActiveRecord
+class Client extends ActiveRecord
 {
     /**
-     * Return table name of platform_map.
+     * Return table name of client.
      *
      * @return string
      */
     public static function tableName()
     {
-        return 'platform_map';
+        return 'client';
     }
 
     /**

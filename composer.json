@@ -25,7 +25,9 @@
         "marquine/php-etl": "dev-master",
         "flow-php/etl": "1.x-dev",
         "flow-php/etl-adapter-csv": "1.x-dev",
-        "flow-php/etl-adapter-json": "1.x-dev"
+        "flow-php/etl-adapter-json": "1.x-dev",
+        "flow-php/etl-adapter-xml": "1.x-dev",
+        "flow-php/etl-adapter-text": "1.x-dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

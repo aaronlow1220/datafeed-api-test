@@ -4,17 +4,17 @@
 namespace app\components\client;
 
 use AtelliTech\Yii2\Utils\AbstractRepository;
-use app\models\ClientMap;
+use app\models\Client;
 
 /**
- * This is a repository class for accessing client map.
+ * This is a repository class for accessing client.
  *
  * @author Aaron Low <aaron.low@atelli.ai>
  */
-class ClientMapRepo extends AbstractRepository
+class ClientRepo extends AbstractRepository
 {
     /**
      * @var string Model class. Required.
      */
-    protected string $modelClass = ClientMap::class;
+    protected string $modelClass = Client::class;
 }

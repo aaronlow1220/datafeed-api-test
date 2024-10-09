@@ -4,17 +4,17 @@
 namespace app\components\datafeed;
 
 use AtelliTech\Yii2\Utils\AbstractRepository;
-use app\models\Datafeed;
+use app\models\DataVersion;
 
 /**
- * This is a repository class for accessing datafeed.
+ * This is a repository class for accessing data version.
  *
  * @author Aaron Low <aaron.low@atelli.ai>
  */
-class DatafeedRepo extends AbstractRepository
+class DataVersionRepo extends AbstractRepository
 {
     /**
      * @var string Model class. Required.
      */
-    protected string $modelClass = Datafeed::class;
+    protected string $modelClass = DataVersion::class;
 }

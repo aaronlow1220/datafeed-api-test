@@ -2,10 +2,10 @@
 
 return [
     'GET /apidoc' => 'v1/open-api-spec/index',
-    [ // taxonomy-type
+    [ // client
         'class' => 'yii\rest\UrlRule',
         'controller' => [
-            'client-map' => 'v1/client-map',
+            'client' => 'v1/client',
         ],
         'except' => ['index', 'delete'],
         'extraPatterns' => [
@@ -22,7 +22,7 @@ return [
         'extraPatterns' => [
             'OPTIONS <a:(transform|search)>' => 'options',
             'POST <a:(search)>' => '<a>',
-            'GET <a:(transform)>' => '<a>',
+            'GET <a:(transform-csv|transform-xml)>' => '<a>',
         ],
     ]
 ];
