@@ -66,10 +66,10 @@ class TransformerController extends ActiveApiController
 
         $etl = data_frame()
             ->read(from_array($data))
-            ->select("id", "availability", "condition", "description", "image_link", "link", "title", "price", "sale_price", "gtin", "mpn", "brand", "google_product_category", "item_group_id", "custom_label_0", "custom_label_1", "custom_label_2", "custom_label_3", "custom_label_4")
-            ->load(to_csv($destinationPath));
+            ->select("id", "availability", "condition", "description", "image_link", "link", "title", "price", "sale_price", "gtin", "mpn", "brand", "google_product_category", "item_group_id", "custom_label_0", "custom_label_1", "custom_label_2", "custom_label_3", "custom_label_4");
 
-        $etl->run();
+        // Load to CSV
+        $etl->load(to_csv($destinationPath))->run();
 
         return $etl;
     }
