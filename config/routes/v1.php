@@ -13,7 +13,18 @@ return [
             'POST <a:(search)>' => '<a>',
         ],
     ],
-    [ // Test
+    [ // platform
+        'class' => 'yii\rest\UrlRule',
+        'controller' => [
+            'platform' => 'v1/platform',
+        ],
+        'except' => ['index', 'delete'],
+        'extraPatterns' => [
+            'OPTIONS <a:(search)>' => 'options',
+            'POST <a:(search)>' => '<a>',
+        ],
+    ],
+    [ // Transformer
         'class' => 'yii\rest\UrlRule',
         'controller' => [
             'transformer' => 'v1/transformer',

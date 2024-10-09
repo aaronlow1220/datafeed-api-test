@@ -9,22 +9,22 @@ use yii\web\HttpException;
 
 /**
  * @OA\Tag(
- *     name="Client",
- *     description="Everything about your Client",
+ *     name="Platform",
+ *     description="Everything about your Platform",
  * )
- * 
+ *
  * @OA\Get(
- *     path="/client/{id}",
+ *     path="/platform/{id}",
  *     summary="Get",
- *     description="Get Client by particular id",
- *     operationId="getClient",
- *     tags={"Client"},
+ *     description="Get Platform by particular id",
+ *     operationId="getPlatform",
+ *     tags={"Platform"},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
- *         description="Client id",
+ *         description="Platform id",
  *         required=true,
- *         @OA\Schema(ref="#/components/schemas/Client/properties/id")
+ *         @OA\Schema(ref="#/components/schemas/Platform/properties/id")
  *     ),
  *     @OA\Parameter(
  *         name="fields",
@@ -39,73 +39,73 @@ use yii\web\HttpException;
  *     @OA\Response(
  *         response=200,
  *         description="Successful operation",
- *         @OA\JsonContent(type="object", ref="#/components/schemas/Client")
+ *         @OA\JsonContent(type="object", ref="#/components/schemas/Platform")
  *     )
  * )
  *
  * @OA\Post(
- *     path="/client",
+ *     path="/platform",
  *     summary="Create",
- *     description="Create a record of Client",
- *     operationId="createClient",
- *     tags={"Client"},
+ *     description="Create a record of Platform",
+ *     operationId="createPlatform",
+ *     tags={"Platform"},
  *     @OA\RequestBody(
- *         description="Client object that needs to be added",
+ *         description="Platform object that needs to be added",
  *         required=true,
  *         @OA\MediaType(
  *             mediaType="application/json",
  *             @OA\Schema(
- *                  @OA\Property(property="name", ref="#/components/schemas/Client/properties/name"),
- *                  @OA\Property(property="data", ref="#/components/schemas/Client/properties/data"),
+ *                  @OA\Property(property="name", ref="#/components/schemas/Platform/properties/name"),
+ *                  @OA\Property(property="data", ref="#/components/schemas/Platform/properties/data"),
  *             )
  *         ),
  *     ),
  *     @OA\Response(
  *         response=200,
  *         description="Successful operation",
- *         @OA\JsonContent(type="object", ref="#/components/schemas/Client")
+ *         @OA\JsonContent(type="object", ref="#/components/schemas/Platform")
  *     )
  * )
  *
  * @OA\Patch(
- *     path="/client/{id}",
+ *     path="/platform/{id}",
  *     summary="Update",
- *     description="Update a record of Client",
- *     operationId="updateClient",
- *     tags={"Client"},
+ *     description="Update a record of Platform",
+ *     operationId="updatePlatform",
+ *     tags={"Platform"},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
- *         description="Client id",
+ *         description="Platform id",
  *         required=true,
- *         @OA\Schema(ref="#/components/schemas/Client/properties/id")
+ *         @OA\Schema(ref="#/components/schemas/Platform/properties/id")
  *     ),
  *     @OA\RequestBody(
- *         description="Client object that needs to be updated",
+ *         description="Platform object that needs to be updated",
  *         required=true,
  *         @OA\MediaType(
  *             mediaType="application/json",
  *             @OA\Schema(
- *                  @OA\Property(property="name", ref="#/components/schemas/Client/properties/name"),
- *                  @OA\Property(property="data", ref="#/components/schemas/Client/properties/data"),
+ *                  @OA\Property(property="name", ref="#/components/schemas/Platform/properties/name"),
+ *                  @OA\Property(property="data", ref="#/components/schemas/Platform/properties/data"),
  *             )
  *         ),
  *     ),
  *     @OA\Response(
  *         response=200,
  *         description="Successful operation",
- *         @OA\JsonContent(type="object", ref="#/components/schemas/Client")
+ *         @OA\JsonContent(type="object", ref="#/components/schemas/Platform")
  *     )
  * )
- *
+ * 
  * @version 1.0.0
  */
-class ClientController extends ActiveApiController
+class PlatformController extends ActiveApiController
 {
     /**
      * @var string $modelClass
      */
-    public $modelClass = 'app\models\Client';
+    public $modelClass = 'app\models\Platform';
 
     /**
      * {@inherit}

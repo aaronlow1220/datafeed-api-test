@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client</title>
+    <title>Platform</title>
     <link rel="shortcut icon" href="https://symbols.getvecta.com/stencil_28/26_data-catalog.96ec6138ec.svg"
         type="image/x-icon">
 </head>
 <script>
     let container = "client-data";
-    let url = "http://localhost:8080/client";
+    let url = "http://localhost:8080/platform";
 
     function collectAndSendData(divId) {
         const div = document.getElementById(divId);
@@ -50,7 +50,7 @@
         align-items: center;
     }
 
-    #client-data {
+    #platform-data {
         display: flex;
         flex-direction: column;
         width: 12rem;
@@ -62,11 +62,11 @@
 </style>
 
 <body>
-    <h1>Client Data</h1>
+    <h1>Platform Data</h1>
     <input id="name" placeholder="name" type="text">
     <br>
     <br>
-    <div id="client-data">
+    <div id="platform-data">
         <input id="id" placeholder="id" type="text">
         <input id="availability" placeholder="availability" type="text">
         <input id="condition" placeholder="condition" type="text">
@@ -88,7 +88,7 @@
         <input id="custom_label_4" placeholder="custom_label_4" type="text">
     </div>
 
-    <input type="button" onclick="collectAndSendData('client-data')" value="submit">
+    <input type="button" onclick="collectAndSendData('platform-data')" value="submit">
 </body>
 
 </html>
