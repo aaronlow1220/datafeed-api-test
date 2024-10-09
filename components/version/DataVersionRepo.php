@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\components\datafeed;
+namespace app\components\version;
 
 use AtelliTech\Yii2\Utils\AbstractRepository;
 use app\models\DataVersion;
