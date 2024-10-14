@@ -66,6 +66,14 @@ class TransformerController extends ActiveApiController
             }
         }
 
+        // Unset unwanted columns
+        foreach ($client as $key => $value) {
+            if ($value === '') {
+                unset($client[$key]);
+                unset($platform[$key]);
+            }
+        }
+
         $data = [];
 
         $xml = new SimpleXMLElement($originPath, 0, true);
@@ -113,6 +121,14 @@ class TransformerController extends ActiveApiController
 
         // Unset unwanted columns
         foreach ($platform as $key => $value) {
+            if ($value === '') {
+                unset($client[$key]);
+                unset($platform[$key]);
+            }
+        }
+
+        // Unset unwanted columns
+        foreach ($client as $key => $value) {
             if ($value === '') {
                 unset($client[$key]);
                 unset($platform[$key]);
