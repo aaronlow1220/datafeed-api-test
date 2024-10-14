@@ -52,6 +52,20 @@ class TransformerController extends ActiveApiController
         $originPath = __DIR__ . '/../files/original/footer_feed.xml';
         $destinationPath = __DIR__ . '/../files/result/footer_adgeek_feed.csv';
 
+        $client = $this->clientRepo->findOne(['name' => "footer"]);
+        $platform = $this->platformRepo->findOne(['name' => "fb"]);
+
+        $client = json_decode($client["data"], true);
+        $platform = json_decode($platform["data"], true);
+
+        // Unset unwanted columns
+        foreach ($platform as $key => $value) {
+            if ($value === '') {
+                unset($client[$key]);
+                unset($platform[$key]);
+            }
+        }
+
         $data = [];
 
         $xml = new SimpleXMLElement($originPath, 0, true);
@@ -65,8 +79,15 @@ class TransformerController extends ActiveApiController
         }
 
         $etl = data_frame()
-            ->read(from_array($data))
-            ->select("id", "availability", "condition", "description", "image_link", "link", "title", "price", "sale_price", "gtin", "mpn", "brand", "google_product_category", "item_group_id", "custom_label_0", "custom_label_1", "custom_label_2", "custom_label_3", "custom_label_4");
+            ->read(from_array($data));
+
+        // Rename columns
+        foreach ($client as $key => $value) {
+            $etl->rename($value, $key);
+        }
+
+        // Select only the columns that are required by the platform
+        $etl->select(...array_keys($platform));
 
         // Load to CSV
         $etl->load(to_csv($destinationPath))->run();
@@ -114,4 +135,45 @@ class TransformerController extends ActiveApiController
 
         return $etl;
     }
+
+    // /**
+    //  * Transform TXT
+    //  *
+    //  * @return mixed
+    //  */
+    // public function actionTransformCsv()
+    // {
+    //     $originPath = __DIR__ . '/../files/original/airspace_feed.csv';
+    //     $destinationPath = __DIR__ . '/../files/result/airspace_adgeek_feed.csv';
+
+    //     $client = $this->clientRepo->findOne(['name' => "airspace"]);
+    //     $platform = $this->platformRepo->findOne(['name' => "fb"]);
+
+    //     $client = json_decode($client["data"], true);
+    //     $platform = json_decode($platform["data"], true);
+
+    //     // Unset unwanted columns
+    //     foreach ($platform as $key => $value) {
+    //         if ($value === '') {
+    //             unset($client[$key]);
+    //             unset($platform[$key]);
+    //         }
+    //     }
+
+    //     // Read CSV
+    //     $etl = data_frame()->read(from_csv($originPath));
+
+    //     // Rename columns
+    //     foreach ($client as $key => $value) {
+    //         $etl->rename($value, $key);
+    //     }
+
+    //     // Select only the columns that are required by the platform
+    //     $etl->select(...array_keys($platform));
+
+    //     // Load to CSV
+    //     $etl->load(to_csv($destinationPath))->run();
+
+    //     return $etl;
+    // }
 }
