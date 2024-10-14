@@ -49,8 +49,8 @@ class TransformerController extends ActiveApiController
      */
     public function actionTransformXml()
     {
-        $originPath = __DIR__ . '/../files/footer_feed.xml';
-        $destinationPath = __DIR__ . '/../files/footer_adgeek_feed.csv';
+        $originPath = __DIR__ . '/../files/original/footer_feed.xml';
+        $destinationPath = __DIR__ . '/../files/result/footer_adgeek_feed.csv';
 
         $data = [];
 
@@ -81,8 +81,8 @@ class TransformerController extends ActiveApiController
      */
     public function actionTransformCsv()
     {
-        $originPath = __DIR__ . '/../files/airspace_feed.csv';
-        $destinationPath = __DIR__ . '/../files/airspace_adgeek_feed.csv';
+        $originPath = __DIR__ . '/../files/original/airspace_feed.csv';
+        $destinationPath = __DIR__ . '/../files/result/airspace_adgeek_feed.csv';
 
         $client = $this->clientRepo->findOne(['name' => "airspace"]);
         $platform = $this->platformRepo->findOne(['name' => "fb"]);
