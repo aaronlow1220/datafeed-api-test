@@ -58,17 +58,8 @@ class TransformerController extends ActiveApiController
         $client = json_decode($client["data"], true);
         $platform = json_decode($platform["data"], true);
 
-        // Unset unwanted columns
         foreach ($platform as $key => $value) {
-            if ($value === '') {
-                unset($client[$key]);
-                unset($platform[$key]);
-            }
-        }
-
-        // Unset unwanted columns
-        foreach ($client as $key => $value) {
-            if ($value === '') {
+            if ($value === '' || $client[$key] === '') {
                 unset($client[$key]);
                 unset($platform[$key]);
             }
@@ -119,21 +110,13 @@ class TransformerController extends ActiveApiController
         $client = json_decode($client["data"], true);
         $platform = json_decode($platform["data"], true);
 
-        // Unset unwanted columns
         foreach ($platform as $key => $value) {
-            if ($value === '') {
+            if ($value === '' || $client[$key] === '') {
                 unset($client[$key]);
                 unset($platform[$key]);
             }
         }
 
-        // Unset unwanted columns
-        foreach ($client as $key => $value) {
-            if ($value === '') {
-                unset($client[$key]);
-                unset($platform[$key]);
-            }
-        }
 
         // Read CSV
         $etl = data_frame()->read(from_csv($originPath));
@@ -152,44 +135,45 @@ class TransformerController extends ActiveApiController
         return $etl;
     }
 
-    // /**
-    //  * Transform TXT
-    //  *
-    //  * @return mixed
-    //  */
-    // public function actionTransformCsv()
-    // {
-    //     $originPath = __DIR__ . '/../files/original/airspace_feed.csv';
-    //     $destinationPath = __DIR__ . '/../files/result/airspace_adgeek_feed.csv';
+    /**
+     * Transform CSV
+     *
+     * @return mixed
+     */
+    public function actionTransformTxt()
+    {
+        $originPath = __DIR__ . '/../files/original/pazzo_feed.txt';
+        $destinationPath = __DIR__ . '/../files/result/pazzo_adgeek_feed.csv';
 
-    //     $client = $this->clientRepo->findOne(['name' => "airspace"]);
-    //     $platform = $this->platformRepo->findOne(['name' => "fb"]);
+        $client = $this->clientRepo->findOne(['name' => "pazzo"]);
+        $platform = $this->platformRepo->findOne(['name' => "fb"]);
 
-    //     $client = json_decode($client["data"], true);
-    //     $platform = json_decode($platform["data"], true);
+        $client = json_decode($client["data"], true);
+        $platform = json_decode($platform["data"], true);
 
-    //     // Unset unwanted columns
-    //     foreach ($platform as $key => $value) {
-    //         if ($value === '') {
-    //             unset($client[$key]);
-    //             unset($platform[$key]);
-    //         }
-    //     }
+        foreach ($platform as $key => $value) {
+            if ($value === '' || $client[$key] === '') {
+                unset($client[$key]);
+                unset($platform[$key]);
+            }
+        }
 
-    //     // Read CSV
-    //     $etl = data_frame()->read(from_csv($originPath));
 
-    //     // Rename columns
-    //     foreach ($client as $key => $value) {
-    //         $etl->rename($value, $key);
-    //     }
+        // Read CSV
+        $etl = data_frame()->read(from_csv($originPath));
 
-    //     // Select only the columns that are required by the platform
-    //     $etl->select(...array_keys($platform));
+        // Rename columns
+        foreach ($client as $key => $value) {
+            $etl->rename($value, $key);
+        }
 
-    //     // Load to CSV
-    //     $etl->load(to_csv($destinationPath))->run();
+        // Select only the columns that are required by the platform
+        $etl->select(...array_keys($platform));
 
-    //     return $etl;
-    // }
+        // Load to CSV
+        $etl->load(to_csv($destinationPath))->run();
+
+        return $etl;
+    }
+
 }
