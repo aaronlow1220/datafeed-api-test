@@ -3,12 +3,14 @@
 namespace v1\controllers;
 
 use v1\components\ActiveApiController;
+use yii\web\HttpException;
 use function Flow\ETL\DSL\{data_frame, from_array};
 use function Flow\ETL\Adapter\CSV\{from_csv, to_csv};
 use app\components\client\ClientRepo;
 use app\components\platform\PlatformRepo;
 use app\modules\v1\Module;
 use SimpleXMLElement;
+use Throwable;
 
 class TransformerController extends ActiveApiController
 {
@@ -61,7 +63,6 @@ class TransformerController extends ActiveApiController
         foreach ($platform as $key => $value) {
             if ($value === '' || $client[$key] === '') {
                 unset($client[$key]);
-                unset($platform[$key]);
             }
         }
 
@@ -76,6 +77,9 @@ class TransformerController extends ActiveApiController
             }
             $data[] = $itemData;
         }
+
+        var_dump($data);
+            exit;
 
         $etl = data_frame()
             ->read(from_array($data));
@@ -113,7 +117,6 @@ class TransformerController extends ActiveApiController
         foreach ($platform as $key => $value) {
             if ($value === '' || $client[$key] === '') {
                 unset($client[$key]);
-                unset($platform[$key]);
             }
         }
 
@@ -135,45 +138,76 @@ class TransformerController extends ActiveApiController
         return $etl;
     }
 
-    /**
-     * Transform CSV
-     *
-     * @return mixed
-     */
-    public function actionTransformTxt()
-    {
-        $originPath = __DIR__ . '/../files/original/pazzo_feed.txt';
-        $destinationPath = __DIR__ . '/../files/result/pazzo_adgeek_feed.csv';
-
-        $client = $this->clientRepo->findOne(['name' => "pazzo"]);
-        $platform = $this->platformRepo->findOne(['name' => "fb"]);
-
-        $client = json_decode($client["data"], true);
-        $platform = json_decode($platform["data"], true);
-
-        foreach ($platform as $key => $value) {
-            if ($value === '' || $client[$key] === '') {
-                unset($client[$key]);
-                unset($platform[$key]);
-            }
-        }
+    // /**
+    //  * Transform CSV
+    //  *
+    //  * @return mixed
+    //  */
+    // public function actionTransformTxt()
+    // {
+    //     // try {
+    //         $originPath = __DIR__ . '/../files/original/pazzo_feed.txt';
+    //         $destinationPath = __DIR__ . '/../files/result/pazzo_adgeek_feed.csv';
 
 
-        // Read CSV
-        $etl = data_frame()->read(from_csv($originPath));
+    //         $client = $this->clientRepo->findOne(['name' => "pazzo"]);
+    //         $platform = $this->platformRepo->findOne(['name' => "fb"]);
 
-        // Rename columns
-        foreach ($client as $key => $value) {
-            $etl->rename($value, $key);
-        }
+    //         $client = json_decode($client["data"], true);
+    //         $platform = json_decode($platform["data"], true);
 
-        // Select only the columns that are required by the platform
-        $etl->select(...array_keys($platform));
+    //         foreach ($platform as $key => $value) {
+    //             if ($value === '' || $client[$key] === '') {
+    //                 unset($client[$key]);
+    //             }
+    //         }
 
-        // Load to CSV
-        $etl->load(to_csv($destinationPath))->run();
+    //         $data = $this->convertTxtToAssociativeArray($originPath);
+    //         var_dump($data);
+    //         exit;
 
-        return $etl;
-    }
+    //         $etl = data_frame()
+    //             ->read(from_array($data));
 
+    //         var_dump($etl);
+    //         exit;
+
+    //         // Rename columns
+    //         foreach ($client as $key => $value) {
+    //             $etl->rename($value, $key);
+    //         }
+
+    //         // Select only the columns that are required by the platform
+    //         $etl->select(...array_keys($platform));
+
+    //         // Load to CSV
+    //         $etl->load(to_csv($destinationPath))->run();
+    //     // } catch (Throwable $e) {
+    //     //     throw new HttpException(400, $e->getMessage());
+    //     // }
+    //     return $etl;
+
+    // }
+
+    // function convertTxtToAssociativeArray($filePath)
+    // {
+    //     // Open the file
+    //     $file = fopen($filePath, "r");
+
+    //     // Read the first line to get the column headers
+    //     $headers = fgetcsv($file);
+
+    //     $dataArray = [];
+
+    //     // Loop through the rest of the file to get the data
+    //     while (($row = fgetcsv($file)) !== false) {
+    //         // Combine headers with corresponding row data
+    //         $dataArray[] = array_combine($headers, $row);
+    //     }
+
+    //     // Close the file
+    //     fclose($file);
+
+    //     return $dataArray;
+    // }
 }

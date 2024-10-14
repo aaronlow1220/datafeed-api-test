@@ -33,7 +33,7 @@ return [
         'extraPatterns' => [
             'OPTIONS <a:(transform|search)>' => 'options',
             'POST <a:(search)>' => '<a>',
-            'GET <a:(transform-csv|transform-xml)>' => '<a>',
+            'GET <a:(transform-csv|transform-xml|transform-txt)>' => '<a>',
         ],
     ]
 ];
