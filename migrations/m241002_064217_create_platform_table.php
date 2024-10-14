@@ -15,7 +15,7 @@ class m241002_064217_create_platform_table extends Migration
     public function safeUp()
     {
         $this->createTable($this->table, [
-            'id' => $this->bigPrimaryKey(20)->unsigned(),
+            'id' => $this->bigPrimaryKey()->unsigned()->notNull()->comment('Auto increment id'),
             'name' => $this->string(255)->notNull()->comment('Platform name'),
             'data' => $this->text()->notNull()->comment('Data mapping rule, JSON format'),
             'created_by' => $this->bigInteger(20)->unsigned()->notNull()->comment('ref: > user.id'),
