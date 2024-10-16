@@ -191,8 +191,8 @@ class TransformerController extends ActiveApiController
         // Open the file
         $file = fopen($filePath, "r");
 
-        // Remove Bom
-        fseek($file, 3);
+        // Remove BOM
+        $bom = fread($file, 3);
 
         // Read the first line to get the column headers
         $headers = fgetcsv($file);
